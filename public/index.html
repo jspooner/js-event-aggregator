@@ -2,16 +2,32 @@
 <html>
   <head>
     <title>EventManager</title>
+    <style type="text/css" media="screen">
+    div#left { float: left; }
+    iframe { float: right; }
+    </style>
     <script src="javascripts/event_manager.js"></script>
     <script type="text/javascript">
-      var eventManager = new core.EventManager();
-      
+      (function() {
+        var eventManager = new core.EventManager();
+        
+        
+      }());
     </script>
   </head>
   <body>
-    <div>
+    <div id="left">
       <h1>Site A</h1>
-      <iframe class="preview preview-banner" src="http://siteb.dev/iframe.html"></iframe>
+      <div id="buttons">
+        <h3>Subscribe</h3>
+        <a class="subscribe" href="#">click</a>
+        <h3>Unsubscribe</h3>
+        <a class="unsubscribe" href="#">click</a>
+      </div>
+      <div id="console">
+        console
+      </div>
     </div>
+    <iframe class="preview preview-banner" src="http://siteb.dev/iframe.html" width="50%" height="400"></iframe>
   </body>
 </html>
