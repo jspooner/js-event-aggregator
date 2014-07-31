@@ -66,13 +66,7 @@
   var EventManager = function() {
     this._channels = {}                                                         // hash of channels { 'ch1': new Channels() }
     console.log("new EventManager", window.location.href);
-    if (window === parent) {
-      this._otherWindows = Array.prototype.slice.call(window.frames);
-    } else {
-      this._otherWindows = [parent];
-    }
-    
-    
+    (window === parent) ? this._otherWindows = Array.prototype.slice.call(window.frames) : this._otherWindows = [parent];
     this._targetOrigin = "*";
     if (location.ancestorOrigins && location.ancestorOrigins.length > 0) {
       this._targetOrigin = location.ancestorOrigins[0];
