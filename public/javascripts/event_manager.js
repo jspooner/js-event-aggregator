@@ -42,6 +42,14 @@
     this._messages      = {}
     this._channel       = channelName;
   }
+  //
+  // Notification
+  //
+  var Notification = function(channel, message, data) {
+    this.channel = channel;
+    this.message = message;
+    this.data    = data;
+  }
   /**
   * EventManager 
   * The EventManager is an event aggregator with cross iFrame support.
@@ -56,19 +64,21 @@
   *    em.publish('click', { 'foo' : 'bar' });
   **/
   var EventManager = function() {
-    this._channels = {}                                                         // { 'ch1': new Message() }
+    this._channels = {}                                                         // hash of channels { 'ch1': new Channels() }
     console.log("new EventManager", window.location.href);
     this._otherWindow = parent;
     this._targetOrigin = "*";
     if (location.ancestorOrigins && location.ancestorOrigins.length > 0) {
       this._targetOrigin = location.ancestorOrigins[0];
     }    
-    window.addEventListener("message", function(event) { // can we move this into a private method? ex: _handlePostMessage
-      var message = event['data'];
-      console.log("EventManager handeling postMesage", message);
-      console.log("Full postMessage event", event);
-      if(this._messages[message]) {
-        ((this._messages[message])).notify({});
+    window.addEventListener("message", function(messageEvent) { // can we move this into a private method? ex: _handlePostMessage
+      var notification = messageEvent['data'],
+          channel = notification['channel'],
+          message = notification['message'];
+      console.log("EventManager handeling postMesage", channel, message, notification);
+      // console.log("Full postMessage event", messageEvent);
+      if (this._channels[channel] && this._channels[channel]._messages[message]) {
+        (this._channels[channel]._messages[message]).notify(notification);
       }
     }.bind(this));
   }
@@ -104,19 +114,18 @@
   };
   EventManager.prototype.publish = function(channel, message, payload) {
     console.log('publish', channel, message);
+    var notification = new Notification(channel, message, payload);
     if (this._channels[channel] && this._channels[channel]._messages[message]) {
-      (this._channels[channel]._messages[message]).notify(payload);
+      (this._channels[channel]._messages[message]).notify(notification);
     }
-    // if(this._messages[message]) {
-    //   ((this._messages[message])).notify(payload);
-    // }
-    // this._otherWindow.postMessage(message, this._targetOrigin);
+    this._otherWindow.postMessage(notification, this._targetOrigin);
   };
   
   
   if (window.core == undefined) {
     window.core = {};
   }
+  window.core.Notification = Notification;
   window.core.EventManager = EventManager;
   
 })();

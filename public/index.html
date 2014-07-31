@@ -10,7 +10,7 @@
           var clickToken = eventManager.subscribe('channel1', 'click', function(payload) { // ?? channel, message, payload or Notification object
             console.log('--- index.html handle event ', payload);
           });
-          console.log("clickToken", clickToken);
+          console.log("clickToken", clickToken);          
           eventManager.publish('channel1', 'click', {'url':'http://google.com'});
           eventManager.publish('channel2', 'click');
           eventManager.unsubscribe('channel1', 'click', clickToken);
