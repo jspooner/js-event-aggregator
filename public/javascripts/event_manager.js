@@ -133,7 +133,6 @@
   if (window.core == undefined) {
     window.core = {};
   }
-  window.core.Notification = Notification;
   window.core.EventManager = EventManager;
   
 })();
