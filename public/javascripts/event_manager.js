@@ -73,8 +73,8 @@
     }    
     window.addEventListener("message", function(messageEvent) { // can we move this into a private method? ex: _handlePostMessage
       var notification = messageEvent['data'],
-          channel = notification['channel'],
-          message = notification['message'];
+          channel      = notification['channel'],
+          message      = notification['message'];
       console.log("EventManager handeling postMesage", channel, message, notification);
       // console.log("Full postMessage event", messageEvent);
       if (this._channels[channel] && this._channels[channel]._messages[message]) {
