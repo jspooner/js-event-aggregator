@@ -98,8 +98,8 @@
   */
   EventManager.prototype.unsubscribe = function(channel, message, token) {
     console.log("-------------", channel, message, token)
-    if(this._messages[message]) {
-      this._messages[message].unsubscribe(token);
+    if (this._channels[channel] && this._channels[channel]._messages[message]) {
+      this._channels[channel]._messages[message].unsubscribe(token);
     }
   };
   EventManager.prototype.publish = function(channel, message, payload) {

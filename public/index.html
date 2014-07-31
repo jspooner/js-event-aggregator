@@ -13,7 +13,8 @@
           console.log("clickToken", clickToken);
           eventManager.publish('channel1', 'click', {'url':'http://google.com'});
           eventManager.publish('channel2', 'click');
-          
+          eventManager.unsubscribe('channel1', 'click', clickToken);
+          eventManager.publish('channel1', 'click', {'url':'http://google.com/this+should+not+be+fired'});
         }
       }());
     </script>

@@ -17,3 +17,11 @@ Set up pow.cs with sitea.dev and siteb.dev
     $ cd ~/.pow
     $ ln -s ~/v/js-eventmanager sitea
     $ ln -s ~/v/js-eventmanager siteb
+    
+    
+    
+    
+    
+## TODO
+
+ * eventManager.subscribe('channel1', 'click', function(payload) { // ?? channel, message, payload or Notification object
