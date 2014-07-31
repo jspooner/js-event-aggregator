@@ -13,7 +13,7 @@
   // Message
   //
   var Message = function(messageName) {
-    console.log("new Message", messageName);
+    // console.log("new Message", messageName);
     this._message       = messageName;
     this._subscriptions = [];
     this._nextId        = 0;
@@ -38,7 +38,7 @@
   // Channel
   //
   var Channel = function(channelName) {
-    console.log("new Channel", channelName);
+    // console.log("new Channel", channelName);
     this._messages      = {}
     this._channel       = channelName;
   }
@@ -107,13 +107,13 @@
   * @return {Boolean} 
   */
   EventManager.prototype.unsubscribe = function(channel, message, token) {
-    console.log("-------------", channel, message, token)
+    // console.log("-------------", channel, message, token)
     if (this._channels[channel] && this._channels[channel]._messages[message]) {
       this._channels[channel]._messages[message].unsubscribe(token);
     }
   };
   EventManager.prototype.publish = function(channel, message, payload) {
-    console.log('publish', channel, message);
+    // console.log('publish', channel, message);
     var notification = new Notification(channel, message, payload);
     if (this._channels[channel] && this._channels[channel]._messages[message]) {
       (this._channels[channel]._messages[message]).notify(notification);

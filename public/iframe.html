@@ -4,8 +4,19 @@
     <title>EventManager</title>
     <script src="javascripts/event_manager.js"></script>
     <script type="text/javascript">
-      var eventManager = new core.EventManager();
-      
+      (function() {
+        window.onload = function() {
+          var CHANNEL = 'iframePage';
+          var eventManager = new core.EventManager();
+          var clickToken = eventManager.subscribe(CHANNEL, 'click', function(payload) {
+            console.log('--- iframe.html handle event ', payload);
+          });
+          eventManager.publish(CHANNEL, 'click', {'url':'http://iframe.com'});
+          // eventManager.publish(CHANNEL, 'click');
+          // eventManager.unsubscribe(CHANNEL, 'click', clickToken);
+          // eventManager.publish(CHANNEL, 'click', {'url':'http://iframe.com/this+should+not+be+fired'});
+        }
+      }());
     </script>
   </head>
   <body>

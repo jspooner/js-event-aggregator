@@ -20,8 +20,3 @@ Set up pow.cs with sitea.dev and siteb.dev
     
     
     
-    
-    
-## TODO
-
- * eventManager.subscribe('channel1', 'click', function(payload) { // ?? channel, message, payload or Notification object

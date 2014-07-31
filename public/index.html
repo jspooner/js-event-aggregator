@@ -7,19 +7,23 @@
       (function() {
         window.onload = function() {
           var eventManager = new core.EventManager();
-          var clickToken = eventManager.subscribe('channel1', 'click', function(payload) { // ?? channel, message, payload or Notification object
+          var clickToken = eventManager.subscribe('channel1', 'click', function(payload) {
             console.log('--- index.html handle event ', payload);
           });
-          console.log("clickToken", clickToken);          
-          eventManager.publish('channel1', 'click', {'url':'http://google.com'});
-          eventManager.publish('channel2', 'click');
-          eventManager.unsubscribe('channel1', 'click', clickToken);
-          eventManager.publish('channel1', 'click', {'url':'http://google.com/this+should+not+be+fired'});
+          eventManager.subscribe('iframePage', 'click', function(payload){
+            console.log('--- index.html handle event ', payload);
+            debugger
+          });
+          
+          // eventManager.publish('channel1', 'click', {'url':'http://google.com'});
+          // eventManager.publish('channel2', 'click');
+          // eventManager.unsubscribe('channel1', 'click', clickToken);
+          // eventManager.publish('channel1', 'click', {'url':'http://google.com/this+should+not+be+fired'});
         }
       }());
     </script>
   </head>
   <body>
-    
+    <iframe src="iframe.html"></iframe>
   </body>
 </html>
