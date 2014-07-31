@@ -66,7 +66,13 @@
   var EventManager = function() {
     this._channels = {}                                                         // hash of channels { 'ch1': new Channels() }
     console.log("new EventManager", window.location.href);
-    this._otherWindow = parent;
+    if (window === parent) {
+      this._otherWindows = Array.prototype.slice.call(window.frames);
+    } else {
+      this._otherWindows = [parent];
+    }
+    
+    
     this._targetOrigin = "*";
     if (location.ancestorOrigins && location.ancestorOrigins.length > 0) {
       this._targetOrigin = location.ancestorOrigins[0];
@@ -118,7 +124,9 @@
     if (this._channels[channel] && this._channels[channel]._messages[message]) {
       (this._channels[channel]._messages[message]).notify(notification);
     }
-    this._otherWindow.postMessage(notification, this._targetOrigin);
+    for (var i = 0; i < this._otherWindows.length; i++) { 
+      this._otherWindows[i].postMessage(notification, this._targetOrigin);
+    }
   };
   
   

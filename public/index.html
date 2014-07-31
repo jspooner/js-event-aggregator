@@ -12,10 +12,17 @@
           });
           eventManager.subscribe('iframePage', 'click', function(payload){
             console.log('--- index.html handle event ', payload);
-            debugger
+            // debugger
           });
+          eventManager.subscribe('iframePageB', 'click', function(payload){
+            console.log('--- index.html iframePageB handle event ', payload);
+            // debugger
+          });
+          setTimeout(function() {
+            eventManager.publish('index.html', 'onload', {'url':'http://localhost'});
+            eventManager.publish('channel1', 'click', {'url':'http://google.com'});
+          }, 1);
           
-          // eventManager.publish('channel1', 'click', {'url':'http://google.com'});
           // eventManager.publish('channel2', 'click');
           // eventManager.unsubscribe('channel1', 'click', clickToken);
           // eventManager.publish('channel1', 'click', {'url':'http://google.com/this+should+not+be+fired'});
@@ -24,6 +31,7 @@
     </script>
   </head>
   <body>
-    <iframe src="iframe.html"></iframe>
+    <iframe id="frame1" src="iframe.html"></iframe>
+    <iframe id="frame2" src="iframe_b.html"></iframe>
   </body>
 </html>
