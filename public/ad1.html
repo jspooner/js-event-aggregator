@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EventManager</title>
+    <script src="javascripts/event_manager.js"></script>
+    <script type="text/javascript">
+      (function() {
+        window.onload = function() {
+          var CHANNEL = 'ad1';
+          var eventManager = new core.EventManager();
+          eventManager.subscribe(CHANNEL, 'click', function(payload) {
+            console.log('ad1.html', CHANNEL, payload);
+          });
+          eventManager.subscribe(CHANNEL, 'init', function(payload) {
+            console.log('ad1.html', CHANNEL, payload);
+            debugger
+          });
+          eventManager.publish(CHANNEL, 'click', {'url':'http://iframe.com'});
+        }
+      }());
+    </script>
+  </head>
+  <body>
+    <h1>My Banner Ad1</h1>
+  </body>
+</html>

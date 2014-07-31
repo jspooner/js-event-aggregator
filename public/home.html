@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EventManager home</title>
+    <script src="javascripts/event_manager.js"></script>
+    <script type="text/javascript">
+      (function() {
+        window.onload = function() {
+          // ad 1
+          (function() {
+            var CHANNEL      = 'ad1'
+            var eventManager = new core.EventManager();
+            eventManager.subscribe(CHANNEL, 'click', function(payload) {
+              console.log('home.html', CHANNEL, payload);
+            });
+            eventManager.publish(CHANNEL, 'init');
+          }());
+          // ad 2
+          (function() {
+            var CHANNEL      = 'ad2'
+            var eventManager = new core.EventManager();
+            eventManager.subscribe(CHANNEL, 'click', function(payload) {
+              console.log('home.html', CHANNEL, payload);
+            });
+            eventManager.publish(CHANNEL, 'init');
+          }());
+          // 
+        }
+      }());
+      
+    </script>
+  </head>
+  <body>
+    <h1>Home Page</h1>
+    <iframe src="ad1.html"></iframe>
+    <iframe src="ad2.html"></iframe>
+  </body>
+</html>
