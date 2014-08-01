@@ -6,15 +6,14 @@
     <script type="text/javascript">
       (function() {
         window.onload = function() {
-          var CHANNEL = 'iframePageB';
           var eventManager = new core.EventManager();
-          var clickToken = eventManager.subscribe(CHANNEL, 'click', function(payload) {
+          var clickToken = eventManager.subscribe('click', function(payload) {
             console.log('--- iframe.html handle event ', payload);
           });
-          eventManager.publish(CHANNEL, 'click', {'url':'http://iframe.com'});
-          // eventManager.publish(CHANNEL, 'click');
-          // eventManager.unsubscribe(CHANNEL, 'click', clickToken);
-          // eventManager.publish(CHANNEL, 'click', {'url':'http://iframe.com/this+should+not+be+fired'});
+          eventManager.publish('click', {'url':'http://iframe.com'});
+          // eventManager.publish('click');
+          // eventManager.unsubscribe('click', clickToken);
+          // eventManager.publish('click', {'url':'http://iframe.com/this+should+not+be+fired'});
         }
       }());
     </script>

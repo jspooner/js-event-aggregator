@@ -35,18 +35,9 @@
     }
   };
   //
-  // Channel
-  //
-  var Channel = function(channelName) {
-    // console.log("new Channel", channelName);
-    this._messages      = {}
-    this._channel       = channelName;
-  }
-  //
   // Notification
   //
-  var Notification = function(channel, message, data) {
-    this.channel = channel;
+  var Notification = function(message, data) {
     this.message = message;
     this.data    = data;
   }
@@ -64,7 +55,8 @@
   *    em.publish('click', { 'foo' : 'bar' });
   **/
   var EventManager = function() {
-    this._channels = {}                                                         // hash of channels { 'ch1': new Channels() }
+    // TODO Init with a list of windows
+    this._messages = {}                                                         // hash of channels { 'ch1': new Message() }
     console.log("new EventManager", window.location.href);
     (window === parent) ? this._otherWindows = Array.prototype.slice.call(window.frames) : this._otherWindows = [parent];
     this._targetOrigin = "*";
@@ -76,9 +68,11 @@
           channel      = notification['channel'],
           message      = notification['message'];
       console.log("EventManager handeling postMesage", channel, message, notification);
-      // console.log("Full postMessage event", messageEvent);
-      if (this._channels[channel] && this._channels[channel]._messages[message]) {
-        (this._channels[channel]._messages[message]).notify(notification);
+      console.log("Full postMessage event", messageEvent);
+      console.log("------------------------------------ TODO check to see if this window is one we're interested in. ", messageEvent.source);
+
+      if (this._messages[message]) {
+        (this._messages[message]).notify(notification);
       }
     }.bind(this));
   }
@@ -91,10 +85,9 @@
   * @param {Function} callback
   * @return {String} Returns a token that is used to unsubscribe
   */
-  EventManager.prototype.subscribe = function(channel, message, callback) {
-    // console.log("EventManager.subscribe", channel, message);
-    var channel = this._channels[channel] || (this._channels[channel] = new Channel(channel))         // has hash of of channels
-    var message = channel._messages[message] || (channel._messages[message] = new Message(message));  // each channel has a hash of messages
+  EventManager.prototype.subscribe = function(message, callback) {
+    // console.log("EventManager.subscribe", message);
+    var message = this._messages[message] || (this._messages[message] = new Message(message));
     return message.subscribe(callback);
   };
   /**
@@ -106,17 +99,17 @@
   * @param {String} token
   * @return {Boolean} 
   */
-  EventManager.prototype.unsubscribe = function(channel, message, token) {
-    // console.log("-------------", channel, message, token)
-    if (this._channels[channel] && this._channels[channel]._messages[message]) {
-      this._channels[channel]._messages[message].unsubscribe(token);
+  EventManager.prototype.unsubscribe = function(message, token) {
+    // console.log("-------------", message, token)
+    if (this._messages[message]) {
+      this._messages[message].unsubscribe(token);
     }
   };
-  EventManager.prototype.publish = function(channel, message, payload) {
-    // console.log('publish', channel, message);
-    var notification = new Notification(channel, message, payload);
-    if (this._channels[channel] && this._channels[channel]._messages[message]) {
-      (this._channels[channel]._messages[message]).notify(notification);
+  EventManager.prototype.publish = function(message, payload) {
+    // console.log('publish', message);
+    var notification = new Notification(message, payload);
+    if (this._messages[message]) {
+      this._messages[message].notify(notification);
     }
     for (var i = 0; i < this._otherWindows.length; i++) { 
       this._otherWindows[i].postMessage(notification, this._targetOrigin);

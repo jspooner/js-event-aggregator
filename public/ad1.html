@@ -6,16 +6,14 @@
     <script type="text/javascript">
       (function() {
         window.onload = function() {
-          var CHANNEL = 'ad1';
           var eventManager = new core.EventManager();
-          eventManager.subscribe(CHANNEL, 'click', function(payload) {
-            console.log('ad1.html', CHANNEL, payload);
+          eventManager.subscribe('click', function(payload) {
+            console.log('ad1.html', payload);
           });
-          eventManager.subscribe(CHANNEL, 'init', function(payload) {
-            console.log('ad1.html', CHANNEL, payload);
-            debugger
+          eventManager.subscribe('init', function(payload) {
+            console.log('ad1.html', payload);
           });
-          eventManager.publish(CHANNEL, 'click', {'url':'http://iframe.com'});
+          eventManager.publish('click', {'url':'http://iframe.com'});
         }
       }());
     </script>

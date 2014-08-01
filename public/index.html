@@ -7,20 +7,20 @@
       (function() {
         window.onload = function() {
           var eventManager = new core.EventManager();
-          var clickToken = eventManager.subscribe('channel1', 'click', function(payload) {
+          var clickToken = eventManager.subscribe('click', function(payload) {
             console.log('--- index.html handle event ', payload);
           });
-          eventManager.subscribe('iframePage', 'click', function(payload){
+          eventManager.subscribe('click', function(payload){
             console.log('--- index.html handle event ', payload);
             // debugger
           });
-          eventManager.subscribe('iframePageB', 'click', function(payload){
+          eventManager.subscribe('click', function(payload){
             console.log('--- index.html iframePageB handle event ', payload);
             // debugger
           });
           setTimeout(function() {
-            eventManager.publish('index.html', 'onload', {'url':'http://localhost'});
-            eventManager.publish('channel1', 'click', {'url':'http://google.com'});
+            eventManager.publish('onload', {'url':'http://localhost'});
+            eventManager.publish('click', {'url':'http://google.com'});
           }, 1);
           
           // eventManager.publish('channel2', 'click');

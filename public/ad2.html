@@ -6,16 +6,15 @@
     <script type="text/javascript">
       (function() {
         window.onload = function() {
-          var CHANNEL = 'ad2';
           var eventManager = new core.EventManager();
-          eventManager.subscribe(CHANNEL, 'click', function(payload) {
-            console.log('ad2.html', CHANNEL, payload);
+          eventManager.subscribe('click', function(payload) {
+            console.log('ad2.html', payload);
           });
-          eventManager.subscribe(CHANNEL, 'init', function(payload) {
-            console.log('ad2.html', CHANNEL, payload);
-            debugger
+          eventManager.subscribe('init', function(payload) {
+            console.log('ad2.html', payload);
+            // debugger
           });
-          eventManager.publish(CHANNEL, 'click', {'url':'http://ad2.com'});
+          eventManager.publish('click', {'url':'http://ad2.com'});
         }
       }());
     </script>

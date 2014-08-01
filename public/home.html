@@ -8,21 +8,19 @@
         window.onload = function() {
           // ad 1
           (function() {
-            var CHANNEL      = 'ad1'
             var eventManager = new core.EventManager();
-            eventManager.subscribe(CHANNEL, 'click', function(payload) {
-              console.log('home.html', CHANNEL, payload);
+            eventManager.subscribe('click', function(payload) {
+              console.log('home.html', payload);
             });
-            eventManager.publish(CHANNEL, 'init');
+            eventManager.publish('init');
           }());
           // ad 2
           (function() {
-            var CHANNEL      = 'ad2'
             var eventManager = new core.EventManager();
-            eventManager.subscribe(CHANNEL, 'click', function(payload) {
-              console.log('home.html', CHANNEL, payload);
+            eventManager.subscribe('click', function(payload) {
+              console.log('home.html', payload);
             });
-            eventManager.publish(CHANNEL, 'init');
+            eventManager.publish('init');
           }());
           // 
         }
