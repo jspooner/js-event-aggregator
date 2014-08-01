@@ -6,13 +6,13 @@
     <script type="text/javascript">
       (function() {
         window.onload = function() {
-          var eventManager = new core.EventManager();
+          var eventManager = new core.EventManager(parent);
           eventManager.subscribe('click', function(payload) {
             console.log('ad2.html', payload);
           });
           eventManager.subscribe('init', function(payload) {
             console.log('ad2.html', payload);
-            // debugger
+            document.body.style.background = payload['data']['color'];
           });
           eventManager.publish('click', {'url':'http://ad2.com'});
         }

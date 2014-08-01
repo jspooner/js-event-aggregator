@@ -57,8 +57,9 @@
   var EventManager = function() {
     // TODO Init with a list of windows
     this._messages = {}                                                         // hash of channels { 'ch1': new Message() }
-    console.log("new EventManager", window.location.href);
-    (window === parent) ? this._otherWindows = Array.prototype.slice.call(window.frames) : this._otherWindows = [parent];
+    console.log("new EventManager", window.location.href, arguments);
+    // (window === parent) ? this._otherWindows = Array.prototype.slice.call(window.frames) : this._otherWindows = [parent];
+    this._otherWindows = arguments
     this._targetOrigin = "*";
     if (location.ancestorOrigins && location.ancestorOrigins.length > 0) {
       this._targetOrigin = location.ancestorOrigins[0];
@@ -67,12 +68,15 @@
       var notification = messageEvent['data'],
           channel      = notification['channel'],
           message      = notification['message'];
-      console.log("EventManager handeling postMesage", channel, message, notification);
-      console.log("Full postMessage event", messageEvent);
-      console.log("------------------------------------ TODO check to see if this window is one we're interested in. ", messageEvent.source);
-
-      if (this._messages[message]) {
-        (this._messages[message]).notify(notification);
+      // console.log("EventManager handeling postMesage", channel, message, notification);
+      // console.log("Full postMessage event", messageEvent);
+      // console.log("------------------------------------ TODO check to see if this window is one we're interested in. ", messageEvent.source);
+      for (var i = 0; i < this._otherWindows.length; i++) {
+        if (this._otherWindows[i] === messageEvent.source) {
+          if (this._messages[message]) {
+            (this._messages[message]).notify(notification);
+          }
+        }
       }
     }.bind(this));
   }

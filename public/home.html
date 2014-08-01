@@ -5,22 +5,33 @@
     <script src="javascripts/event_manager.js"></script>
     <script type="text/javascript">
       (function() {
+        window.incrementCount = function() {
+          var el       = document.getElementById("clickCount");
+          el.innerHTML = Number(el.innerHTML) + 1
+        }
+        
         window.onload = function() {
+          
           // ad 1
           (function() {
-            var eventManager = new core.EventManager();
+            var banner       = document.getElementById("ad1");
+            var expandable   = document.getElementById("adExpandable1");
+            var eventManager = new core.EventManager(banner.contentWindow, expandable.contentWindow);
             eventManager.subscribe('click', function(payload) {
               console.log('home.html', payload);
+              window.incrementCount()
             });
-            eventManager.publish('init');
+            eventManager.publish('init', {'color':'red'});
           }());
           // ad 2
           (function() {
-            var eventManager = new core.EventManager();
+            var banner       = document.getElementById("ad2");
+            var eventManager = new core.EventManager(banner.contentWindow);
             eventManager.subscribe('click', function(payload) {
               console.log('home.html', payload);
+              window.incrementCount()
             });
-            eventManager.publish('init');
+            eventManager.publish('init', {'color':'pink'});
           }());
           // 
         }
@@ -30,7 +41,9 @@
   </head>
   <body>
     <h1>Home Page</h1>
-    <iframe src="ad1.html"></iframe>
-    <iframe src="ad2.html"></iframe>
+    <p>click count: <span id="clickCount">0</span></p>
+    <iframe id="ad1" src="ad1.html"></iframe>
+    <iframe id="adExpandable1" src="ad1.html"></iframe>
+    <iframe id="ad2" src="ad2.html"></iframe>
   </body>
 </html>
